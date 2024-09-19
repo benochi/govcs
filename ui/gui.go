@@ -9,7 +9,7 @@ import (
 	"govcs/config"
 	"govcs/sync"
 
-	"fyne.io/fyne"
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
@@ -61,7 +61,10 @@ func StartApp() {
 			Items: []*widget.FormItem{
 				{Text: "Remote Directory ID", Widget: remoteDirEntry},
 			},
-			OnSubmit: func() {
+			OnSubmit: func(b bool) { // Accept the bool parameter
+				if !b { // If form is canceled, do nothing
+					return
+				}
 				remoteDir := remoteDirEntry.Text
 				if remoteDir == "" {
 					return

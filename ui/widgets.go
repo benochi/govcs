@@ -1,5 +1,3 @@
-// File: ui/widgets.go
-
 package ui
 
-// Placeholder for custom widgets. You can add custom components here as needed.
+// Placeholder for custom widgets. Add custom components here as needed.
