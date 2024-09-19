@@ -1,5 +1,3 @@
-// File: ui/gui.go
-
 package ui
 
 import (
@@ -9,7 +7,7 @@ import (
 	"govcs/config"
 	"govcs/sync"
 
-	"fyne.io/fyne/v2"
+	fyne "fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
@@ -61,23 +59,22 @@ func StartApp() {
 			Items: []*widget.FormItem{
 				{Text: "Remote Directory ID", Widget: remoteDirEntry},
 			},
-			OnSubmit: func(b bool) { // Accept the bool parameter
-				if !b { // If form is canceled, do nothing
-					return
-				}
-				remoteDir := remoteDirEntry.Text
-				if remoteDir == "" {
-					return
-				}
-				config.AppConfig.RemoteDir = remoteDir
-				remoteDirLabel.SetText("Remote Directory ID: " + remoteDir)
-				err := config.SaveConfig()
-				if err != nil {
-					dialog.ShowError(err, w)
-				}
-			},
 		}
-		dialog.ShowForm("Set Remote Directory ID", "Submit", "Cancel", form.Items, form.OnSubmit, w)
+		dialog.ShowForm("Set Remote Directory ID", "Submit", "Cancel", form.Items, func(b bool) {
+			if !b { // If form is canceled, do nothing
+				return
+			}
+			remoteDir := remoteDirEntry.Text
+			if remoteDir == "" {
+				return
+			}
+			config.AppConfig.RemoteDir = remoteDir
+			remoteDirLabel.SetText("Remote Directory ID: " + remoteDir)
+			err := config.SaveConfig()
+			if err != nil {
+				dialog.ShowError(err, w)
+			}
+		}, w)
 	})
 
 	statusLabel := widget.NewLabel("Status: Ready")

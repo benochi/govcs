@@ -3,7 +3,6 @@ module govcs
 go 1.21.0
 
 require (
-	fyne.io/fyne v1.4.3
 	fyne.io/fyne/v2 v2.5.1
 	golang.org/x/oauth2 v0.23.0
 	google.golang.org/api v0.198.0
