@@ -1,5 +1,3 @@
-// File: drive/drive.go
-
 package drive
 
 import (

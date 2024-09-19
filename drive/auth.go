@@ -22,19 +22,19 @@ func Authenticate() error {
 
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to read client secret file: %v", err)
 	}
 
 	configOAuth, err := google.ConfigFromJSON(b, driveapi.DriveScope)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to parse client secret file to config: %v", err)
 	}
 
 	client := getClient(configOAuth)
 
 	Service, err = driveapi.NewService(ctx, option.WithHTTPClient(client))
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to retrieve Drive client: %v", err)
 	}
 
 	return nil

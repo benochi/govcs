@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	driveapi "google.golang.org/api/drive/v3"
 )
 
 // CompareFiles determines which local files need to be uploaded based on modification times.

@@ -16,6 +16,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// StartApp initializes and runs the GUI application.
 func StartApp() {
 	a := app.New()
 	w := a.NewWindow("GoVCS - Google Drive VCS Tool")
@@ -55,17 +56,25 @@ func StartApp() {
 	})
 
 	selectRemoteBtn := widget.NewButton("Set Remote Directory ID", func() {
-		dialog.ShowEntryDialog("Set Remote Directory ID", "Enter Remote Directory ID:", func(remoteDir string) {
-			if remoteDir == "" {
-				return
-			}
-			config.AppConfig.RemoteDir = remoteDir
-			remoteDirLabel.SetText("Remote Directory ID: " + remoteDir)
-			err := config.SaveConfig()
-			if err != nil {
-				dialog.ShowError(err, w)
-			}
-		}, w)
+		remoteDirEntry := widget.NewEntry()
+		form := &widget.Form{
+			Items: []*widget.FormItem{
+				{Text: "Remote Directory ID", Widget: remoteDirEntry},
+			},
+			OnSubmit: func() {
+				remoteDir := remoteDirEntry.Text
+				if remoteDir == "" {
+					return
+				}
+				config.AppConfig.RemoteDir = remoteDir
+				remoteDirLabel.SetText("Remote Directory ID: " + remoteDir)
+				err := config.SaveConfig()
+				if err != nil {
+					dialog.ShowError(err, w)
+				}
+			},
+		}
+		dialog.ShowForm("Set Remote Directory ID", "Submit", "Cancel", form.Items, form.OnSubmit, w)
 	})
 
 	statusLabel := widget.NewLabel("Status: Ready")

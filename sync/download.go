@@ -9,6 +9,8 @@ import (
 	"govcs/config"
 	"govcs/drive"
 	"govcs/utils"
+
+	driveapi "google.golang.org/api/drive/v3"
 )
 
 // DownloadFiles handles downloading a list of files from Google Drive.
